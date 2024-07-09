@@ -3,15 +3,22 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
-const favicon = require("serve-favicon");
-const path = require("path");
+// const favicon = require("serve-favicon");
+// const path = require("path");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
+// app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use(express.json());
 app.use(cors());
 
 const uri = process.env.DATABASE_URL;
+function ignoreFavicon(req, res, next) {
+  if (req.originalUrl.includes("favicon.ico")) {
+    res.status(204).end();
+  }
+  next();
+}
+app.use(ignoreFavicon);
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
