@@ -3,7 +3,10 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require("cors");
+const favicon = require("serve-favicon");
+const path = require("path");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+app.use(favicon(path.join(__dirname, "public", "favicon.ico")));
 
 app.use(express.json());
 app.use(cors());
